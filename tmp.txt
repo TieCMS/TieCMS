@@ -1,0 +1,4 @@
+User A 0 USER
+User B 1 SUPPORTER
+User C 3 ADMIN
+User D 3 ADMIN -> SERVER

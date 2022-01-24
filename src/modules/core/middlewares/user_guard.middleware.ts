@@ -8,13 +8,17 @@ import { Groups } from "../../database/cache/groups.ts";
  * Has user permission middleware
  * checks authorization for context user and user permissions if provided
  */
-export function userGuard(types: string[], ...permissions: PermissionStrings[]) {
+export function userGuard(
+  types: string[],
+  ...permissions: PermissionStrings[]
+) {
   const typesSet = new Set(types);
   //TODO anpassen!
   return async function (context: Context, next: () => Promise<unknown>) {
     const tokenType = context.state.tokenType;
 
-    if (!tokenType || !typesSet.has(tokenType)) throw new httpErrors.Unauthorized("Unauthorized");
+    if (!tokenType || !typesSet.has(tokenType))
+      throw new httpErrors.Unauthorized("Unauthorized");
     //typeset = ["Client", "Application"]
     //typesSet.has("Client")
     if (tokenType === "Client") {
@@ -24,7 +28,10 @@ export function userGuard(types: string[], ...permissions: PermissionStrings[]) 
 
       const perms =
         context.state.user.permissions |
-        context.state.user.groups.reduce((calculated, group) => calculated | (Groups.get(group) ?? 0n), 0n);
+        context.state.user.groups.reduce(
+          (calculated, group) => calculated | (Groups.get(group) ?? 0n),
+          0n
+        );
 
       // If permissions specified, then check logged in users permissions
       if (permissions && !validatePermissions(perms, permissions, tokenType)) {

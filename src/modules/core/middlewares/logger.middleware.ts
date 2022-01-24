@@ -1,7 +1,21 @@
-import { brightGreen, brightBlue, brightYellow, brightRed, green, yellow, blue, white, red, bold } from "../../../../deps.ts";
+import {
+  brightGreen,
+  brightBlue,
+  brightYellow,
+  brightRed,
+  green,
+  yellow,
+  blue,
+  white,
+  red,
+  bold,
+} from "../../../../deps.ts";
 import { Context } from "../../../types/mod.ts";
 import { logger } from "../../../utils/mod.ts";
-export async function loggerMiddleware(context: Context, next: () => Promise<unknown>) {
+export async function loggerMiddleware(
+  context: Context,
+  next: () => Promise<unknown>
+) {
   await next();
   const reqTime = context.response.headers.get("X-Response-Time");
   const status = context.response.status;
@@ -37,12 +51,22 @@ export async function loggerMiddleware(context: Context, next: () => Promise<unk
       color = white;
       break;
   }
-  if (/\.(css|js|jpg|png|ico|woff2|woff|ttf|wasm|svg|map)$/.test(context.request.url.pathname)) {
+  if (
+    /\.(css|js|jpg|png|ico|woff2|woff|ttf|wasm|svg|map)$/.test(
+      context.request.url.pathname
+    )
+  ) {
     return logger.debug(
-      color(bold(`${context.request.method} `)) + `${context.request.url.pathname} ` + code(`${status} `) + `${reqTime}`
+      color(bold(`${context.request.method} `)) +
+        `${context.request.url.pathname} ` +
+        code(`${status} `) +
+        `${reqTime}`
     );
   }
   logger.info(
-    color(bold(`${context.request.method} `)) + `${context.request.url.pathname} ` + code(`${status} `) + `${reqTime}`
+    color(bold(`${context.request.method} `)) +
+      `${context.request.url.pathname} ` +
+      code(`${status} `) +
+      `${reqTime}`
   );
 }

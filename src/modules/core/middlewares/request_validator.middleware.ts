@@ -14,7 +14,9 @@ export const errorMessages = {
 export function requestValidator(bodyRules: validator.ValidationRules) {
   return async (context: Context, next: () => Promise<unknown>) => {
     /** get request body */
-    const body = await context.request.body({ type: "json" }).value.catch(() => ({}));
+    const body = await context.request
+      .body({ type: "json" })
+      .value.catch(() => ({}));
 
     /** check rules */
     const [isValid, errors] = await validator.validate(body, bodyRules, {

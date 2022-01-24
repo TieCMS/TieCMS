@@ -1,30 +1,30 @@
 import { OakContext } from "../../deps.ts";
 
 export interface StateContext {
-    user?: User;
-    application?: Application;
-    bearer?: Bearer;
-    tokenType?: string;
+  user?: User;
+  application?: Application;
+  bearer?: Bearer;
+  tokenType?: string;
 }
 
 export type Context = OakContext<StateContext>;
 
 export interface User {
-    id: bigint;
-    username: string;
-    email: string;
-    password?: string;
-    permissions: bigint;
-    groups: string[];
-    avatarUrl: string;
-    sessionId: string;
-    expires: number;
+  id: bigint;
+  username: string;
+  email: string;
+  password?: string;
+  permissions: bigint;
+  groups: string[];
+  avatarUrl: string;
+  sessionId: string;
+  expires: number;
 }
 
 export interface Application {
-    owner: bigint;
+  owner: bigint;
 }
 
 export interface Bearer {
-    scopes: string[];
+  scopes: string[];
 }

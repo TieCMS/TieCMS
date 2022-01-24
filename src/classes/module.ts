@@ -1,6 +1,6 @@
 export class Module {
-    options: any;
-    constructor(options: any) {
-        this.options = options
-    }
+  options: any;
+  constructor(options: any) {
+    this.options = options;
+  }
 }

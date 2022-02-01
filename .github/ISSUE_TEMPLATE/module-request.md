@@ -3,7 +3,7 @@ name: Module Request
 about: Suggest module for the project
 title: "[MODULE]"
 labels: Module Suggestion
-assignees: NewtTheWolf
+assignees: ''
 
 ---
 

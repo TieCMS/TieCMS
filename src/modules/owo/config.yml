@@ -1,0 +1,7 @@
+name: OwO
+version: 1.0.0
+authors: TieCMS
+website: evergene.io
+description: Some BugTracker Module OwO
+permissions:
+  read:

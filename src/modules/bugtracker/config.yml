@@ -1,0 +1,26 @@
+name: BugTracker
+version: 1.0.0
+authors: TieCMS
+website: evergene.io
+description: Some BugTracker Module OwO
+permissions:
+  read:
+    description: Reading bug entries
+    default: true
+  user.read:
+    description: Reading own bug entries
+    default: true
+  write:
+    description: Writing bug entries
+    default: true
+  user.edit:
+    description: Edit own bug entries
+    default: true
+  delete:
+    description: Delete bug entries
+  user.delete:
+    description: Delete own bug entries
+    default: true
+dependencies:
+  - Awoo
+  - Test

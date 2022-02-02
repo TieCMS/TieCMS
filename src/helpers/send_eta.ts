@@ -7,7 +7,7 @@ export async function sendEta(
   fileName: string,
   // deno-lint-ignore no-explicit-any
   data?: { settings?: { [key: string]: any }; [key: string]: any },
-  cb?: CallbackFn,
+  cb?: CallbackFn
 ) {
   try {
     const mode = context.request.url.pathname.split("/")[1];
@@ -19,7 +19,7 @@ export async function sendEta(
         cache: configs.general.env !== "dev" ? true : false,
         //parse: { raw: "-" },
       },
-      cb,
+      cb
     );
     if (!rendered) {
       context.response.status = 404;

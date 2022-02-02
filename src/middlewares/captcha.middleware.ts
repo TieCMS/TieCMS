@@ -14,7 +14,9 @@ interface Captcha {
 
 export function captcha() {
   return async (context: Context, next: () => Promise<unknown>) => {
-    const body = await context.request.body({ type: "json" }).value.catch(() => ({}));
+    const body = await context.request
+      .body({ type: "json" })
+      .value.catch(() => ({}));
 
     const response: Captcha = await fetch("https://hcaptcha.com/siteverify", {
       method: "POST",

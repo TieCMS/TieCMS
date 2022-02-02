@@ -3,7 +3,10 @@ import { Context } from "../types/mod.ts";
 import { configs } from "../../configs.ts";
 import { logger } from "../utils/mod.ts";
 
-export async function errorMiddleware(context: Context, next: () => Promise<unknown>) {
+export async function errorMiddleware(
+  context: Context,
+  next: () => Promise<unknown>
+) {
   try {
     await next();
   } catch (err) {
@@ -17,10 +20,15 @@ export async function errorMiddleware(context: Context, next: () => Promise<unkn
      */
     if (!isHttpError(err)) {
       message =
-        configs.general.env === "dev" || configs.general.env === "development" ? message : "Internal Server Error";
+        configs.general.env === "dev" || configs.general.env === "development"
+          ? message
+          : "Internal Server Error";
     }
 
-    if (configs.general.env === "dev" || configs.general.env === "development") {
+    if (
+      configs.general.env === "dev" ||
+      configs.general.env === "development"
+    ) {
       logger.error(err);
     }
 

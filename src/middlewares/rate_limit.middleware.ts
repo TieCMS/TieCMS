@@ -14,9 +14,15 @@ const rateLimits = new Map<string, { requests: number; startedAt: number }>();
  *
  * Note: The rate limits are per IP
  */
-export function ratelimit(timeout: number, maxRequests: number, options?: { bucket?: string }) {
+export function ratelimit(
+  timeout: number,
+  maxRequests: number,
+  options?: { bucket?: string }
+) {
   return async function (context: Context, next: () => Promise<unknown>) {
-    const id = `${context.request.ip}-${options?.bucket ?? context.request.url.pathname}`;
+    const id = `${context.request.ip}-${
+      options?.bucket ?? context.request.url.pathname
+    }`;
     const rateLimit = rateLimits.get(id);
 
     const now = Date.now();
@@ -25,16 +31,20 @@ export function ratelimit(timeout: number, maxRequests: number, options?: { buck
     context.response.headers.set("X-Rate-Limit-Limit", maxRequests.toString());
     context.response.headers.set(
       "X-Rate-Limit-Remaining",
-      (maxRequests - (rateLimit?.requests ?? 1) < 0 ? 0 : maxRequests - (rateLimit?.requests ?? 1)).toString(),
+      (maxRequests - (rateLimit?.requests ?? 1) < 0
+        ? 0
+        : maxRequests - (rateLimit?.requests ?? 1)
+      ).toString()
     );
     context.response.headers.set(
       "X-Rate-Limit-Reset",
-      (((rateLimit?.startedAt ?? now) + timeout * 1000 - now) / 1000).toString(),
+      (((rateLimit?.startedAt ?? now) + timeout * 1000 - now) / 1000).toString()
     );
 
     // The user has already made a request to this path so increment the rate limit
     if (rateLimit) {
-      if (rateLimit.requests > maxRequests) throw new httpErrors.TooManyRequests("You are being rate limited");
+      if (rateLimit.requests > maxRequests)
+        throw new httpErrors.TooManyRequests("You are being rate limited");
 
       rateLimits.set(id, {
         requests: rateLimit.requests + 1,

@@ -6,7 +6,9 @@ import { parse } from "https://deno.land/std@0.123.0/encoding/yaml.ts";
 export default abstract class Module {
   metadata: Metadata;
   constructor(path: string) {
-    this.metadata = parse(new TextDecoder("utf-8").decode(Deno.readFileSync(`${path}/config.yml`))) as Metadata;
+    this.metadata = parse(
+      new TextDecoder("utf-8").decode(Deno.readFileSync(`${path}/config.yml`))
+    ) as Metadata;
   }
 
   public readonly dependencies: string[] = [];
@@ -17,25 +19,36 @@ export default abstract class Module {
 
   abstract load(): Promise<void> | void;
   abstract unload(): Promise<void> | void;
-  public async depend(cache: Map<string, Module>, stack: Set<string>): Promise<boolean> {
+  public async depend(
+    cache: Map<string, Module>,
+    stack: Set<string>
+  ): Promise<boolean> {
     if (stack.has(this.metadata.name)) {
       logger.error(
         `detected loop in ${[...stack.values(), this.metadata.name]
-          .map((mod) => bold((mod === this.metadata.name ? brightBlue : brightYellow)(mod)))
-          .join(bold(brightRed(" -> ")))}`,
+          .map((mod) =>
+            bold((mod === this.metadata.name ? brightBlue : brightYellow)(mod))
+          )
+          .join(bold(brightRed(" -> ")))}`
       );
       return false;
     }
     stack.add(this.metadata.name);
-    const missingDependencies = this.dependencies.filter((dependency: string) => !cache.get(dependency));
+    const missingDependencies = this.dependencies.filter(
+      (dependency: string) => !cache.get(dependency)
+    );
     if (missingDependencies.length > 0) {
       logger.error(
-        `cannot find ${missingDependencies.length === 1 ? "dependency" : "dependendcies"} ${missingDependencies
+        `cannot find ${
+          missingDependencies.length === 1 ? "dependency" : "dependendcies"
+        } ${missingDependencies
           .map((dep) => bold(brightRed(dep)))
-          .join(", ")} of ${bold(brightYellow(this.metadata.name))}`,
+          .join(", ")} of ${bold(brightYellow(this.metadata.name))}`
       );
 
-      logger.info(`skip ${bold(brightYellow(this.metadata.name))} and continue loading...`);
+      logger.info(
+        `skip ${bold(brightYellow(this.metadata.name))} and continue loading...`
+      );
 
       return false;
     }
@@ -52,14 +65,18 @@ export default abstract class Module {
 
       if (!module.loaded) {
         if (!(await module.depend(cache, stack))) {
-          logger.error(`module ${bold(brightYellow(dependency))} could not be loaded`);
+          logger.error(
+            `module ${bold(brightYellow(dependency))} could not be loaded`
+          );
 
           return false;
         }
 
         try {
           await module.load();
-          logger.info(`module ${bold(brightYellow(module.metadata.name))} loaded`);
+          logger.info(
+            `module ${bold(brightYellow(module.metadata.name))} loaded`
+          );
           stack.delete(module.metadata.name);
         } catch (e) {
           logger.error(e);

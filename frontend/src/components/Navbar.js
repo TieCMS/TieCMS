@@ -1,9 +1,9 @@
 import {
+  DocumentTextIcon,
   HomeIcon,
   MenuIcon,
-  ShoppingBagIcon,
   NewspaperIcon,
-  DocumentTextIcon,
+  ShoppingBagIcon,
   UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
@@ -17,7 +17,7 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full navbar px-8 flex justify-between items-center sticky top-0 z-50 bg-base-200">
+    <navbar className="w-full navbar px-8 flex justify-between items-center sticky top-0 z-50 bg-base-200">
       <h1 className="text-lg font-bold">TieCMS</h1>
 
       <div className="flex justify-end px-2">
@@ -46,7 +46,7 @@ function Navbar() {
           </div>
         </div>
         <div class="avatar pr-2">
-          <div class="rounded-full w-10 h-10 m-1">
+          <div class="rounded-btn w-10 h-10 ">
             <img src="https://i.pravatar.cc/500?img=32" />
           </div>
         </div>
@@ -95,7 +95,7 @@ function Navbar() {
           </li>
         </ul>
       </div>
-    </div>
+    </navbar>
   );
 }
 

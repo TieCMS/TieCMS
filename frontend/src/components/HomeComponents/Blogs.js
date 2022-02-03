@@ -1,7 +1,7 @@
 import { LazyLoadImage as Image } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const latestNews = [
+const featuredBlogs = [
   {
     title: "Lorem ipsum",
     img: "https://picsum.photos/id/1001/400/450",
@@ -32,7 +32,7 @@ const latestNews = [
   },
 ];
 
-function NewsCard({ title, desc, badge, img }) {
+function BlogCard({ title, desc, badge, img }) {
   return (
     <div class="card card-bordered w-full bg-base-200">
       <Image src={img} effect="blur" className="w-full h-56 object-cover" />
@@ -45,26 +45,26 @@ function NewsCard({ title, desc, badge, img }) {
           <p className="text-sm">{desc}</p>
         </div>
         <div class="justify-end card-actions">
-          <button class="btn btn-primary">Learn more</button>
+          <button class="btn btn-primary">Read more</button>
         </div>
       </div>
     </div>
   );
 }
 
-function News() {
+function Blogs() {
   return (
     <div className="container px-4 mb-12">
-      <button className="text-3xl mb-4 underline decoration-primary decoration-4 underline-offset-4">
-        Latest news
-      </button>
+      <h1 className="text-3xl mb-4 underline decoration-primary decoration-4 underline-offset-4">
+        Featured blogs
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {latestNews.map((news) => (
-          <NewsCard
-            title={news.title}
-            desc={news.description}
-            badge={news.featured}
-            img={news.img}
+        {featuredBlogs.map((i) => (
+          <BlogCard
+            title={i.title}
+            desc={i.description}
+            badge={i.featured}
+            img={i.img}
           />
         ))}
       </div>
@@ -72,4 +72,4 @@ function News() {
   );
 }
 
-export default News;
+export default Blogs;

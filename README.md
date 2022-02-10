@@ -1,2 +1,2 @@
 # TieCMS
-TieCMS follows [semantic versioning](https://semver.org/){:target="_blank" rel="noopener"}
+TieCMS follows [semantic versioning](https://semver.org/)

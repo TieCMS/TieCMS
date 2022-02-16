@@ -1,10 +1,15 @@
-import Metadata from "./metadata.ts";
-
 export default interface Config {
-  entry: unknown;
-  key: keyof Metadata;
-  type: "string" | "boolean";
-  isArray?: boolean;
-  required: boolean;
-  defaultValue?: string | string[] | boolean;
+  name: string;
+  version: string;
+  authors: string[];
+  website?: string;
+  description?: string;
+  permissions?: Record<string, Permission>[];
+  dependencies?: string[];
+  softdependencies?: string[];
+}
+
+export interface Permission {
+  description?: string;
+  default?: boolean;
 }

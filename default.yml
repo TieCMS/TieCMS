@@ -1,12 +1,10 @@
 name: string
 version: string
-author: string
 authors: ?string[]
 website: ?string
 description: ?string
-permissions: ?object
-  permission.name: ?object
-    description: ?string
-    default: ?boolean
+permissions: ?object[]
+  - permission.name: ?object
+      description: ?string
+      default: ?boolean
 dependencies: ?string[]
-softdependencies: ?string[]

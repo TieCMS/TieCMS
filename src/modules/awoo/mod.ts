@@ -1,5 +1,4 @@
 import Module from "../../classes/module.ts";
-import Metadata from "../../classes/types/metadata.ts";
 
 export default class Awoo extends Module {
   load() {

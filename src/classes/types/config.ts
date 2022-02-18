@@ -6,7 +6,6 @@ export default interface Config {
   description?: string;
   permissions?: Record<string, Permission>[];
   dependencies?: string[];
-  softdependencies?: string[];
 }
 
 export interface Permission {

@@ -1,19 +1,21 @@
-import { Router } from "../modules/core/mod.ts";
-import { Module } from "./mod.ts";
+import { Router } from "../../deps.ts";
+import { Context } from "../types/mod.ts";
+import Module from "./module.ts";
 
 interface Options {
   prefix?: string;
   path: string;
 }
 
-export class Route extends Module {
+export default class Route {
   router: Router<Record<string, any>>;
+  path: string;
   constructor(options: Options) {
-    super();
+    this.path = options.path;
     this.router = new Router({ prefix: options.prefix });
   }
 
-  get(options: Options) {
-    this.router.get(options.path, (context) => {});
+  get(route: (context: Context) => void) {
+    this.router.get(this.path, route);
   }
 }

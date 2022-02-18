@@ -23,5 +23,11 @@ export { createFernet } from "https://deno.land/x/fernet@0.2.0/mod.ts";
 export * as validator from "https://deno.land/x/validasaur@v0.15.0/mod.ts";
 export { Database, MySQLConnector, Model, DataTypes } from "https://deno.land/x/denodb@v1.0.40/mod.ts";
 
-export { default as React } from "https://dev.jspm.io/react@17.0.1";
-export { default as ReactDOM } from "https://dev.jspm.io/react-dom@17.0.1";
+// @deno-types="https://denopkg.com/soremwar/deno_types/react/v16.13.1/react.d.ts"
+import React from "https://jspm.dev/react@17.0.2";
+// @deno-types="https://denopkg.com/soremwar/deno_types/react-dom/v16.13.1/server.d.ts"
+import ReactDOMServer from "https://jspm.dev/react-dom@17.0.2/server";
+// @deno-types="https://denopkg.com/soremwar/deno_types/react-dom/v16.13.1/react-dom.d.ts"
+import ReactDOM from "https://jspm.dev/react-dom@17.0.2";
+
+export { React, ReactDOM, ReactDOMServer };

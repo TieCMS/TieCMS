@@ -14,11 +14,16 @@ export default class ModuleLoader {
       maxDepth: 1,
     })) {
       if (entry.name === "modules") continue;
-      const module: Module = new (await import(`./${entry.name}/mod.tsx`)).default(`./src/modules/${entry.name}`);
+      const module: Module = new (
+        await import(`./${entry.name}/mod.tsx`)
+      ).default(`./src/modules/${entry.name}`);
       //logger.info(this.validateConfig(module.config));
       if (!ModuleLoader.validateConfig(module.config)) {
         logger.error(
-          `module ${bold(brightYellow(module.config.name)) || bold(brightYellow("undefined"))} could not be loaded`,
+          `module ${
+            bold(brightYellow(module.config.name)) ||
+            bold(brightYellow("undefined"))
+          } could not be loaded`
         );
 
         continue;
@@ -30,7 +35,9 @@ export default class ModuleLoader {
       if (module.loaded) continue;
 
       if (!(await module.depend(this.cache, new Set<string>()))) {
-        logger.error(`module ${bold(brightYellow(module.config.name))} could not be loaded`);
+        logger.error(
+          `module ${bold(brightYellow(module.config.name))} could not be loaded`
+        );
 
         continue;
       }
@@ -152,7 +159,9 @@ export default class ModuleLoader {
         }
 
         if (typeof config !== (isArray ? "object" : type)) {
-          logger.error(`typeof config.${key} must be a ${isArray ? type : `${type} array`}`);
+          logger.error(
+            `typeof config.${key} must be a ${isArray ? type : `${type} array`}`
+          );
           return false;
         }
 
@@ -198,26 +207,45 @@ export default class ModuleLoader {
               permission[Object.keys(permission)[0]] !== null
             ) {
               if (typeof permission[Object.keys(permission)[0]] !== "object") {
-                logger.error(`typeof config.permissions.${Object.keys(permission)[0]} must be a object`);
+                logger.error(
+                  `typeof config.permissions.${
+                    Object.keys(permission)[0]
+                  } must be a object`
+                );
                 return false;
               }
 
               if (permission[Object.keys(permission)[0]])
-                if (permission[Object.keys(permission)[0]].description !== undefined) {
+                if (
+                  permission[Object.keys(permission)[0]].description !==
+                  undefined
+                ) {
                   if (
-                    typeof permission[Object.keys(permission)[0]].description !== "string" ||
+                    typeof permission[Object.keys(permission)[0]]
+                      .description !== "string" ||
                     permission[Object.keys(permission)[0]].description === ""
                   ) {
                     logger.error(
-                      `typeof config.permissions.${Object.keys(permission)[0]}.description must be a string`,
+                      `typeof config.permissions.${
+                        Object.keys(permission)[0]
+                      }.description must be a string`
                     );
                     return false;
                   }
                 }
 
-              if (permission[Object.keys(permission)[0]].default !== undefined) {
-                if (typeof permission[Object.keys(permission)[0]].default !== "boolean") {
-                  logger.error(`typeof config.permissions.${Object.keys(permission)[0]}.default must be a boolean`);
+              if (
+                permission[Object.keys(permission)[0]].default !== undefined
+              ) {
+                if (
+                  typeof permission[Object.keys(permission)[0]].default !==
+                  "boolean"
+                ) {
+                  logger.error(
+                    `typeof config.permissions.${
+                      Object.keys(permission)[0]
+                    }.default must be a boolean`
+                  );
                   return false;
                 }
               }

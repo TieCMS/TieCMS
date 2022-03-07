@@ -4,19 +4,15 @@ import { Context } from "../types/mod.ts";
 import { logger } from "../utils/mod.ts";
 import Config from "./types/config.ts";
 
-interface Options {
-  prefix?: string;
-  path: string;
-}
-
 export default abstract class Module {
-  router: Router<Record<string, any>>;
   config: Config;
-  constructor(path: string, router: Options) {
+  constructor(path: string) {
     this.config = parse(new TextDecoder("utf-8").decode(Deno.readFileSync(`${path}/config.yml`))) as Config;
-    this.router = new Router({ prefix: router.prefix });
+    this.router = new Router({ prefix: this.config.router?.prefix });
   }
-  //public readonly router = new Router({ prefix: "router.prefix" })
+
+  public readonly router: Router<Record<string, Context>>;
+
   public readonly dependencies: string[] = [];
 
   public loaded = false;
@@ -102,5 +98,7 @@ export default abstract class Module {
 
   deactivate() {}
 
-  route(route: (context: Context) => void) {}
+  route(route: (context: Context) => void) {
+    this.router.get("/", route);
+  }
 }

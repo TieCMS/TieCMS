@@ -50,6 +50,7 @@ app.use(middlewares.errorMiddleware);
 //app.use(middlewares.fernetMiddleware);
 
 // Routers
+app.use(ModuleLoader.cache.get("BugTracker")!.router.routes());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

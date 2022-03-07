@@ -25,3 +25,4 @@ permissions:
 dependencies:
   - OwO
   - Test
+router:

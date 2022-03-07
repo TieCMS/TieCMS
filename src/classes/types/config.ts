@@ -6,9 +6,14 @@ export default interface Config {
   description?: string;
   permissions?: Record<string, Permission>[];
   dependencies?: string[];
+  router?: Router;
 }
 
 export interface Permission {
   description?: string;
   default?: boolean;
+}
+
+export interface Router {
+  prefix?: string;
 }

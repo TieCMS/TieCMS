@@ -14,11 +14,21 @@ export default class ModuleLoader {
       maxDepth: 1,
     })) {
       if (entry.name === "modules") continue;
-      const module: Module = new (await import(`./${entry.name}/mod.tsx`)).default(`./src/modules/${entry.name}`);
+<<<<<<< Updated upstream
+      const module: Module = new (
+        await import(`./${entry.name}/mod.ts`)
+      ).default(`./src/modules/${entry.name}`);
+      logger.info(this.validateConfig(module.config));
+=======
+      const module: Module = new (await import(`./${entry.name}/mod.ts`)).default(`./src/modules/${entry.name}`);
       //logger.info(this.validateConfig(module.config));
+>>>>>>> Stashed changes
       if (!ModuleLoader.validateConfig(module.config)) {
         logger.error(
-          `module ${bold(brightYellow(module.config.name)) || bold(brightYellow("undefined"))} could not be loaded`,
+          `module ${
+            bold(brightYellow(module.config.name)) ||
+            bold(brightYellow("undefined"))
+          } could not be loaded`
         );
 
         continue;
@@ -30,7 +40,9 @@ export default class ModuleLoader {
       if (module.loaded) continue;
 
       if (!(await module.depend(this.cache, new Set<string>()))) {
-        logger.error(`module ${bold(brightYellow(module.config.name))} could not be loaded`);
+        logger.error(
+          `module ${bold(brightYellow(module.config.name))} could not be loaded`
+        );
 
         continue;
       }
@@ -57,6 +69,34 @@ export default class ModuleLoader {
   }
 
   static validateConfig(config: Config) {
+<<<<<<< Updated upstream
+    if (
+      config.name === undefined ||
+      typeof config.name !== "string" ||
+      config.name === ""
+    ) {
+      logger.error("typeof name must be a string");
+      return false;
+    }
+
+    if (
+      config.version === undefined ||
+      typeof config.version !== "string" ||
+      config.version === ""
+    ) {
+      logger.error("typeof version must be a string");
+      return false;
+    }
+
+    if (
+      config.authors === undefined ||
+      typeof config.authors !== "object" ||
+      !Array.isArray(config.authors)
+    ) {
+      logger.error("typeof authors must be a object array");
+      return false;
+    }
+=======
     return this.validateConfigs(config, [
       {
         key: "name",
@@ -135,6 +175,7 @@ export default class ModuleLoader {
       const { key, required, type, defaultValue, isArray, nested } = validation;
 
       const config = configs[key as keyof Config];
+>>>>>>> Stashed changes
 
       //if (key === "permissions") continue;
 
@@ -143,6 +184,16 @@ export default class ModuleLoader {
         return false;
       }
 
+<<<<<<< Updated upstream
+    if (config.permissions !== undefined) {
+      if (
+        typeof config.permissions !== "object" ||
+        !Array.isArray(config.permissions)
+      ) {
+        logger.error("typeof permissions must be a object array");
+        return false;
+      }
+=======
       if (config !== undefined) {
         if (isArray) {
           if (!Array.isArray(config)) {
@@ -150,12 +201,52 @@ export default class ModuleLoader {
             return false;
           }
         }
+>>>>>>> Stashed changes
 
         if (typeof config !== (isArray ? "object" : type)) {
           logger.error(`typeof config.${key} must be a ${isArray ? type : `${type} array`}`);
           return false;
         }
 
+<<<<<<< Updated upstream
+        if (
+          permission[Object.keys(permission)[0]] !== undefined &&
+          permission[Object.keys(permission)[0]] !== null
+        ) {
+          if (typeof permission[Object.keys(permission)[0]] !== "object") {
+            logger.error(
+              `typeof ${Object.keys(permission)[0]} must be a object`
+            );
+            return false;
+          }
+
+          if (permission[Object.keys(permission)[0]])
+            if (
+              permission[Object.keys(permission)[0]].description !== undefined
+            ) {
+              if (
+                typeof permission[Object.keys(permission)[0]].description !==
+                  "string" ||
+                permission[Object.keys(permission)[0]].description === ""
+              ) {
+                logger.error(
+                  `typeof ${
+                    Object.keys(permission)[0]
+                  }.description must be a string`
+                );
+                return false;
+              }
+            }
+
+          if (permission[Object.keys(permission)[0]].default !== undefined) {
+            if (
+              typeof permission[Object.keys(permission)[0]].default !==
+              "boolean"
+            ) {
+              logger.error(
+                `typeof ${Object.keys(permission)[0]}.default must be a boolean`
+              );
+=======
         if (isArray && Array.isArray(config)) {
           for (const value of config) {
             if (typeof value !== type) {
@@ -169,8 +260,8 @@ export default class ModuleLoader {
               if (/^\[\w+\]$/.test(nested.key)) {
                 //config.permissions
                 for (const data of config) {
-                  //logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2");
-                  //logger.info(config[data]);
+                  logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2");
+                  logger.info(config[data]);
                   //this.validateConfigs()
                 }
               } else {
@@ -190,9 +281,29 @@ export default class ModuleLoader {
           for (const permission of configs.permissions!) {
             if (permission === undefined || typeof permission !== "object") {
               logger.error("typeof permission must be a object");
+>>>>>>> Stashed changes
               return false;
             }
 
+<<<<<<< Updated upstream
+    if (config.dependencies !== undefined) {
+      if (
+        typeof config.dependencies !== "object" ||
+        !Array.isArray(config.dependencies)
+      ) {
+        logger.error("typeof authors must be a object array");
+        return false;
+      }
+
+      for (const dependencie of config.dependencies) {
+        if (
+          dependencie === undefined ||
+          typeof dependencie !== "string" ||
+          dependencie === ""
+        ) {
+          logger.error("typeof dependencie must be a string");
+          return false;
+=======
             if (
               permission[Object.keys(permission)[0]] !== undefined &&
               permission[Object.keys(permission)[0]] !== null
@@ -223,6 +334,7 @@ export default class ModuleLoader {
               }
             }
           }
+>>>>>>> Stashed changes
         }
       }
     }
@@ -267,9 +379,18 @@ export default class ModuleLoader {
   } */
 }
 
-/* await ModuleLoader.load();
-ModuleLoader.cache.forEach((module) => {
-  if (module.config.router === undefined) return;
-  logger.info(module);
-}); */
+interface Test {
+  a: boolean;
+  b: string;
+}
+
+/**
+ * @overload
+ */
+interface Test {
+  a: false;
+  b: "HAHA";
+}
+
+await ModuleLoader.load();
 //await ModuleLoader.reload();

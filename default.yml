@@ -8,3 +8,4 @@ permissions: ?object[]
       description: ?string
       default: ?boolean
 dependencies: ?string[]
+router: ?string
